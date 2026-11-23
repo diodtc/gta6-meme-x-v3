@@ -21,4 +21,9 @@ const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 mkdirSync(outputDir, { recursive: true });
 
 const post = readFileSync(join(botDir, "POST.json"));
-writeFileSync(join(outputDir, "POST.json"), post);
+try {
+  writeFileSync(join(outputDir, "POST.json"), post);
+} catch (err) {
+  console.error(`POST.json could not be handed over to ${outputDir}: ${(err as Error).message}`);
+  process.exit(1);
+}
